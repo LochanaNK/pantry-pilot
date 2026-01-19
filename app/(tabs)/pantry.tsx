@@ -84,7 +84,13 @@ export default function PantryScreen() {
             <Text className="w-20 text-xl text-semibold border-l border-orange-300 pl-4">
               {item.quantity}
             </Text>
-            
+            <TouchableOpacity onPress={() => handleDelete(item.id)}>
+              <MaterialCommunityIcons
+                name="delete-outline"
+                color="#ef4444"
+                size={24}
+              />
+            </TouchableOpacity>
           </View>
         )}
         ListEmptyComponent={
