@@ -6,7 +6,12 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
+        headerTintColor:'#57534e',
+        headerTitleStyle:{
+          fontWeight:"bold",
+          fontSize:24
+        }
       }}>
       <Tabs.Screen
         name="index"
@@ -15,9 +20,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="pantry"
         options={{
-          title: 'Explore',
+          title: 'MY Pantry',
         }}
       />
     </Tabs>
