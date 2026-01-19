@@ -8,12 +8,13 @@ import {
   Keyboard,
   TextInput,
 } from "react-native";
-import { PantryItem, setupDatabase } from "@/services/database";
+import { setupDatabase } from "@/services/database";
 import { pantryController } from "@/controllers/pantryController";
+import { PantryItem } from "@/types/PantryItem";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function PantryScreen() {
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<PantryItem[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [quantity, setQuantity] = useState("");
 

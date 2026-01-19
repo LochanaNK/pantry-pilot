@@ -1,7 +1,8 @@
 import { db } from '../services/database';
+import { PantryItem } from '@/types/PantryItem';
 
 export const pantryController = {
-    getall: () => {
+    getall: (): PantryItem[] => {
         try {
             return db.getAllSync('SELECT * FROM items ORDER BY id ASC')
         } catch (error) {
