@@ -18,7 +18,7 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: "#ffedd5",
         },
-        tabBarInactiveTintColor: "#57534e",
+        tabBarInactiveTintColor: "#fb923c",
         tabBarActiveTintColor: "#ea580c",
         tabBarLabelStyle: {
           fontSize: 14,
@@ -31,7 +31,7 @@ export default function TabLayout() {
         options={{
           title: "Recipes",
           tabBarIcon:({color,focused})=>(
-            <Ionicons name="fast-food-sharp" size={24} color={focused? "#ea580c" : "#57534e"} />
+            <Ionicons name="fast-food-sharp" size={24} color={focused? "#ea580c" : "#fb923c"} />
           )
         }}
       />
@@ -40,7 +40,7 @@ export default function TabLayout() {
         options={{
           title: "MY Pantry",
           tabBarIcon: ({ color, focused }) => (
-            <FontAwesome6 name="clipboard-list" size={24} color={focused? "#ea580c" : "#57534e"} />
+            <FontAwesome6 name="clipboard-list" size={24} color={focused? "#ea580c" : "#fb923c"} />
           ),
         }}
       />

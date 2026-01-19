@@ -59,8 +59,8 @@ export default function HomeScreen() {
         disabled={loading}
         className="absolute bottom-10 right-6 bg-orange-600 p-4 rounded-full shadow-lg flex-row items-center"
       >
-        <Ionicons name="restaurant-outline" size={24} color="white" />
-        <Text className="text-white font-bold ml-2">Find Recipes</Text>
+        <Ionicons name="restaurant-outline" size={24} color="#ffedd5" />
+        <Text className="text-orange-100 text-lg font-bold ml-2">Find Recipes</Text>
       </TouchableOpacity>
     </View>
   );
