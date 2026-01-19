@@ -10,11 +10,11 @@ export const pantryController = {
         }
     },
 
-    create: (data: any): number | null => {
+    create: (name: string, quantity:string): number | null => {
         try {
             const result = db.runSync(
                 'INSERT INTO items (name,quantity) VALUES (?,?)',
-                [data.name, data.quantity]
+                [name, quantity]
             );
 
             return result.lastInsertRowId;
