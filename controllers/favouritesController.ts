@@ -1,11 +1,11 @@
 import {db} from '@/services/database';
 
 export const favouriteController = {
-    add:(recipeId:number, title:string,image:string)=>{
+    add:(recipeId:number, title:string,image:string,used:number,missed:number)=>{
         try{
             db.runSync(
-                'INSERT INTO favourites (recipeId,title,image) VALUES(?,?,?)'
-                ,[recipeId,title,image]
+                'INSERT INTO favourites (recipeId,title,image,usedCount,missedCount) VALUES(?,?,?,?,?)'
+                ,[recipeId,title,image,used,missed]
             );
             console.log("Added to favourites:",recipeId);
         }catch(error){
@@ -30,6 +30,11 @@ export const favouriteController = {
     },
 
     getAll:()=>{
-        return db.getAllSync('SELECT * FROM favourites');
+        try{
+            return db.getAllSync('SELECT * FROM favourites ORDER BY id DESC');
+        }catch(error){
+            console.error("failed to fetch favourites:",error);
+            return [];
+        }
     }
 };

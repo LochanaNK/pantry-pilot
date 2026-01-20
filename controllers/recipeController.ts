@@ -22,7 +22,7 @@ export const recipeController = {
 
 
             const response = await fetch(
-                `${baseUrl}/findByIngredients?apiKey=${apiKey}&ingredients=${ingredientsQuery}&number=10&ranking=1`
+                `${baseUrl}/findByIngredients?apiKey=${apiKey}&ingredients=${ingredientsQuery}&number=20&ranking=1`
             );
 
             if (!response.ok) {
@@ -40,7 +40,7 @@ export const recipeController = {
     getDetails: async (id: number): Promise<RecipeDetail | null> => {
         try {
             const url = `${baseUrl}/${id}/information?apiKey=${apiKey}`;
-            console.log("🔗 Fetching Details from:", url); // CHECK THIS IN YOUR TERMINAL
+            console.log("🔗 Fetching Details from url");
 
             const response = await fetch(url);
 

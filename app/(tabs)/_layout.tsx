@@ -30,9 +30,22 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Recipes",
-          tabBarIcon:({color,focused})=>(
-            <Ionicons name="fast-food-sharp" size={24} color={focused? "#ea580c" : "#fb923c"} />
-          )
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name="fast-food-sharp"
+              size={24}
+              color={focused ? "#ea580c" : "#fb923c"}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="favourites"
+        options={{
+          title: "Saved",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="heart" size={28} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -40,7 +53,11 @@ export default function TabLayout() {
         options={{
           title: "MY Pantry",
           tabBarIcon: ({ color, focused }) => (
-            <FontAwesome6 name="clipboard-list" size={24} color={focused? "#ea580c" : "#fb923c"} />
+            <FontAwesome6
+              name="clipboard-list"
+              size={24}
+              color={focused ? "#ea580c" : "#fb923c"}
+            />
           ),
         }}
       />

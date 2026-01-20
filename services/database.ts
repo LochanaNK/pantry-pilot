@@ -16,12 +16,14 @@ export const setupDatabase = () => {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             recipeId INTEGER UNIQUE NOT NULL,
             title TEXT NOT NULL,
-            image TEXT
+            image TEXT,
+            usedCount INTEGER,
+            missedCount INTEGER
         );
     `);
-    console.log("Database setup completed.");
-    }catch(error){
-        console.log("database setup error:",error);
+        console.log("Database setup completed.");
+    } catch (error) {
+        console.log("database setup error:", error);
     }
 };
 

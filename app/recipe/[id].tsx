@@ -1,6 +1,13 @@
 import { useLocalSearchParams, Stack, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { View, Text, ScrollView, Image, ActivityIndicator, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
 import { recipeController } from "@/controllers/recipeController";
 import { RecipeDetail } from "@/types/Recipe";
 import { favouriteController } from "@/controllers/favouritesController";
@@ -30,7 +37,13 @@ export default function RecipeDetailScreen() {
     if (isLiked) {
       favouriteController.remove(detail.id);
     } else {
-      favouriteController.add(detail.id, detail.title, detail.image);
+      favouriteController.add(
+        detail.id,
+        detail.title,
+        detail.image,
+        detail.usedIngredientCount || 0,
+        detail.missedIngredientCount || 0,
+      );
     }
     setIsLiked(!isLiked);
   };
@@ -64,23 +77,23 @@ export default function RecipeDetailScreen() {
           <Text className="text-3xl font-bold text-slate-800">
             {detail.title}
           </Text>
-          <Text className="text-orange-600 font-medium mt-1">
+          <Text className="text-orange-600 font-medium text-lg mt-1">
             ⏱️ {detail.readyInMinutes} mins | 🍽️ {detail.servings} servings
           </Text>
 
-          <Text className="text-xl font-bold text-slate-800 mt-8 mb-4">
+          <Text className="text-2xl font-bold text-slate-800 mt-4 mb-4">
             Ingredients
           </Text>
           {detail.extendedIngredients.map((ing, index) => (
-            <Text key={index} className="text-slate-600 text-lg mb-2">
+            <Text key={index} className="text-slate-600 text-lg text-lg mb-2">
               • {ing.original}
             </Text>
           ))}
 
-          <Text className="text-xl font-bold text-slate-800 mt-8 mb-4">
+          <Text className="text-2xl font-bold text-slate-800 mt-8 mb-4">
             Instructions
           </Text>
-          <Text className="text-slate-600 text-lg leading-7">
+          <Text className="text-slate-600 text-xl leading-7  mb-8">
             {detail.instructions?.replace(/<[^>]*>?/gm, "") ||
               "No instructions provided."}
           </Text>
