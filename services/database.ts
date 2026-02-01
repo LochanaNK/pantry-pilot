@@ -18,7 +18,9 @@ export const setupDatabase = () => {
             title TEXT NOT NULL,
             image TEXT,
             usedCount INTEGER,
-            missedCount INTEGER
+            missedCount INTEGER,
+            instructions TEXT,
+            ingredients TEXT
         );
     `);
         console.log("Database setup completed.");

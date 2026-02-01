@@ -40,7 +40,7 @@ export const recipeController = {
     getDetails: async (id: number): Promise<RecipeDetail | null> => {
         try {
             const url = `${baseUrl}/${id}/information?apiKey=${apiKey}`;
-            console.log("🔗 Fetching Details from url");
+            console.log("Fetching Details from url");
 
             const response = await fetch(url);
 

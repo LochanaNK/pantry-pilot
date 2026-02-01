@@ -1,11 +1,12 @@
 import {db} from '@/services/database';
 
 export const favouriteController = {
-    add:(recipeId:number, title:string,image:string,used:number,missed:number)=>{
+    add:(recipeId:number, title:string,image:string,used:number,missed:number,instructions:string,ingredients:any)=>{
         try{
+            const ingredientsString = JSON.stringify(ingredients);
             db.runSync(
-                'INSERT INTO favourites (recipeId,title,image,usedCount,missedCount) VALUES(?,?,?,?,?)'
-                ,[recipeId,title,image,used,missed]
+                'INSERT INTO favourites (recipeId,title,image,usedCount,missedCount,instructions,ingredients) VALUES(?,?,?,?,?,?,?)'
+                ,[recipeId,title,image,used,missed,instructions,ingredientsString]
             );
             console.log("Added to favourites:",recipeId);
         }catch(error){
@@ -36,5 +37,21 @@ export const favouriteController = {
             console.error("failed to fetch favourites:",error);
             return [];
         }
+    },
+    
+    getById: (recipeId: number) => {
+    try {
+      const result = db.getFirstSync<any>(
+        'SELECT * FROM favourites WHERE recipeId = ?',
+        [recipeId]
+      );
+      if (result && result.ingredients) {
+        // Turn the string back into a real JavaScript array
+        result.extendedIngredients = JSON.parse(result.ingredients);
+      }
+      return result;
+    } catch (error) {
+      return null;
     }
+  },
 };

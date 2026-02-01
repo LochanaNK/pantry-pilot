@@ -16,4 +16,5 @@ export interface RecipeDetail extends Recipe{
     extendedIngredients:ExtendedIngredient[];
     readyInMinutes:number;
     servings: number;
+    ingredients:string
 }

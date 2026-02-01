@@ -21,15 +21,31 @@ export default function RecipeDetailScreen() {
 
   useEffect(() => {
     const fetchDetail = async () => {
-      const data = await recipeController.getDetails(Number(id));
-      setDetail(data);
-      setLoading(false);
-      if (data) {
-        setIsLiked(favouriteController.isFavourite(data.id));
+      setLoading(true);
+      try{
+        const savedData = await favouriteController.getById(Number(id));
+
+        if(savedData){
+          setDetail(savedData);
+          setIsLiked(true);
+          setLoading(false);
+          console.log("fetched from database");
+          return;
+        }
+
+        const apiData = await recipeController.getDetails(Number(id));
+        if(apiData){
+          setDetail(apiData);
+          setIsLiked(favouriteController.isFavourite(apiData.id));
+        }
+      }catch(error){
+        console.error("fetch detail error:", error);
+      }finally{
+        setLoading(false);
       }
-    };
+    }
     fetchDetail();
-  }, [id]);
+}, [id]);
 
   const toggleLike = () => {
     if (!detail) return;
@@ -43,6 +59,8 @@ export default function RecipeDetailScreen() {
         detail.image,
         detail.usedIngredientCount || 0,
         detail.missedIngredientCount || 0,
+        detail.instructions || "",
+        detail.extendedIngredients
       );
     }
     setIsLiked(!isLiked);
