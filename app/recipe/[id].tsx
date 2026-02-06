@@ -22,45 +22,52 @@ export default function RecipeDetailScreen() {
   useEffect(() => {
     const fetchDetail = async () => {
       setLoading(true);
-      try{
-        const savedData = await favouriteController.getById(Number(id));
+      try {
+        const isFav = favouriteController.isFavourite(Number(id));
+        setIsLiked(isFav);
 
-        if(savedData){
-          setDetail(savedData);
-          setIsLiked(true);
-          setLoading(false);
-          console.log("fetched from database");
-          return;
+        if (isFav) {
+          const savedData = await favouriteController.getById(Number(id));
+          if (savedData) {
+            setDetail(savedData);
+            setIsLiked(true);
+            setLoading(false);
+            console.log("fetched from database");
+            return;
+          }
         }
-
         const apiData = await recipeController.getDetails(Number(id));
-        if(apiData){
+        if (apiData) {
           setDetail(apiData);
           setIsLiked(favouriteController.isFavourite(apiData.id));
         }
-      }catch(error){
+      } catch (error) {
         console.error("fetch detail error:", error);
-      }finally{
+      } finally {
         setLoading(false);
       }
     }
     fetchDetail();
-}, [id]);
+  }, [id]);
 
   const toggleLike = () => {
     if (!detail) return;
 
+    const numericId = Number(id);
+
     if (isLiked) {
-      favouriteController.remove(detail.id);
+      favouriteController.remove(numericId);
     } else {
       favouriteController.add(
-        detail.id,
+        numericId,
         detail.title,
         detail.image,
         detail.usedIngredientCount || 0,
         detail.missedIngredientCount || 0,
         detail.instructions || "",
-        detail.extendedIngredients
+        detail.extendedIngredients,
+        detail.servings,
+        detail.readyInMinutes
       );
     }
     setIsLiked(!isLiked);

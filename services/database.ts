@@ -20,7 +20,9 @@ export const setupDatabase = () => {
             usedCount INTEGER,
             missedCount INTEGER,
             instructions TEXT,
-            ingredients TEXT
+            ingredients TEXT,
+            servings INTEGER,
+            readyMinutes INTEGER
         );
     `);
         console.log("Database setup completed.");

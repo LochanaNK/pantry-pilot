@@ -1,12 +1,13 @@
 import {db} from '@/services/database';
 
 export const favouriteController = {
-    add:(recipeId:number, title:string,image:string,used:number,missed:number,instructions:string,ingredients:any)=>{
+    add:(recipeId:number, title:string,image:string,used:number,missed:number,instructions:string,ingredients:any,servings:number,readyMinutes:number)=>{
         try{
+            const numericId = Number(recipeId);
             const ingredientsString = JSON.stringify(ingredients);
             db.runSync(
-                'INSERT INTO favourites (recipeId,title,image,usedCount,missedCount,instructions,ingredients) VALUES(?,?,?,?,?,?,?)'
-                ,[recipeId,title,image,used,missed,instructions,ingredientsString]
+                'INSERT INTO favourites (recipeId,title,image,usedCount,missedCount,instructions,ingredients,servings,readyMinutes) VALUES(?,?,?,?,?,?,?,?,?)'
+                ,[numericId,title,image,used,missed,instructions,ingredientsString,servings,readyMinutes]
             );
             console.log("Added to favourites:",recipeId);
         }catch(error){
@@ -17,6 +18,7 @@ export const favouriteController = {
     remove:(recipeId:number)=>{
         try{
             db.runSync('DELETE FROM favourites WHERE recipeId = ?',[recipeId]);
+            console.log("Database: recipe deleted");
         }catch(error){
             console.error("Failed to remove from favourites:",error);
         }
@@ -38,20 +40,24 @@ export const favouriteController = {
             return [];
         }
     },
-    
+
     getById: (recipeId: number) => {
     try {
       const result = db.getFirstSync<any>(
         'SELECT * FROM favourites WHERE recipeId = ?',
         [recipeId]
       );
-      if (result && result.ingredients) {
-        // Turn the string back into a real JavaScript array
-        result.extendedIngredients = JSON.parse(result.ingredients);
+      if(result){
+        return{
+            ...result,
+            id:result.recipeId,
+            extendedIngredients: result.ingredients? JSON.parse(result.ingredients) : [],
+        };
       }
-      return result;
-    } catch (error) {
       return null;
+    }catch(error){
+        console.error("getById error:",error);
+        return null;
     }
   },
 };
